@@ -11,4 +11,4 @@ Feature: Fetch and compare weather information from NDTV and weather API with a 
     |cityName|
     |warangal|
     |Ajmer   |
-    |Bengaluru|
+    |Srinagar|
