@@ -12,7 +12,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>${compiler.version}</version>
                 <configuration>
                     <source>11</source>
                     <target>11</target>
@@ -83,7 +83,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13</version>
+            <version>${junit.version}</version>
             <scope>compile</scope>
         </dependency>
 
@@ -94,5 +94,7 @@
         <lombok.version>1.18.12</lombok.version>
         <cucumber.version>6.6.1</cucumber.version>
         <jackson.version>2.11.2</jackson.version>
+        <junit.version>4.13</junit.version>
+        <compiler.version>3.8.0</compiler.version>
     </properties>
 </project>
