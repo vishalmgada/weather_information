@@ -1,48 +1,58 @@
 package common;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import ui.pageobjects.Engine;
 import ui.utilities.SeleniumUtils;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 
 public class Initialize {
 
-    public static WebDriver driver;
+    protected static WebDriver driver;
     protected static Engine engine;
-    protected static SeleniumUtils seleniumUtils;
     final ObjectMapper objectMapper= new ObjectMapper();
     public static TestConfiguration testConfiguration;
 
+    private static final String CHROME_PROPERTY ="webdriver.chrome.driver";
+    private static final String FIREFOX_PROPERTY ="webdriver.gecko.driver";
+    private static final String CONFIG_FILE_NAME= "testConfiguration.json";
+
     @SneakyThrows
     public void loadConfigProperties(){
-            URL resource = getClass().getClassLoader().getResource("testconfiguration.json");
+            URL resource = getClass().getClassLoader().getResource(CONFIG_FILE_NAME);
             File file = new File(resource.toURI());
             testConfiguration = objectMapper.readValue(file, TestConfiguration.class);
 
     }
-    public void browserSetUp(String browser) {
+    public static void browserSetUp(String browser) {
 
         if(browser.equalsIgnoreCase("chrome")){
-            System.setProperty("webdriver.chrome.driver","src/main/resources/drivers/chromedriver.exe");
+            System.setProperty(CHROME_PROPERTY,testConfiguration.getUiConfiguration().getDriverPath()+"\\chromedriver.exe");
             ChromeOptions options = new ChromeOptions();
             options.setUnhandledPromptBehaviour(UnexpectedAlertBehaviour.ACCEPT);
-            options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+            options.setHeadless(testConfiguration.getUiConfiguration().isHeadless());
             driver = new ChromeDriver(options);
-            driver.manage().window().maximize();
+
+        }else if(browser.equalsIgnoreCase("firefox")){
+            System.setProperty(FIREFOX_PROPERTY,testConfiguration.getUiConfiguration().getDriverPath()+"\\geckodriver.exe");
+            FirefoxOptions options = new FirefoxOptions();
+            options.setUnhandledPromptBehaviour(UnexpectedAlertBehaviour.ACCEPT);
+            options.setHeadless(testConfiguration.getUiConfiguration().isHeadless());
+            driver = new FirefoxDriver(options);
         }
-        driver.get("https://www.ndtv.com/");
+        driver.manage().window().maximize();
+        driver.get(testConfiguration.getUiConfiguration().getWebsite());
         engine = new Engine(driver);
         SeleniumUtils.initializeFluentWait(driver);
     }
+
+
 }

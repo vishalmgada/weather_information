@@ -3,7 +3,11 @@ package api.utilities;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
+import org.junit.Assert;
+
 import java.lang.reflect.Type;
+import java.util.Map;
+
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 @AllArgsConstructor
@@ -33,20 +37,26 @@ public class ResponseValidation {
      *
      * @param headers - Expected Headers
      */
-//    public void validateHeaders(Map<String, String> headers) {
-//        headers.forEach((key, value) -> Assert.assertEquals(value, response.getHeader(key)));
-//
-//    }
-//
-//    /**
-//     * This method is used to validate cookies of the response
-//     *
-//     * @param cookies - Expected Cookies
-//     */
-//    public void validateCookies(Map<String, String> cookies) {
-//        cookies.forEach((key, value) -> Assert.assertEquals(value, response.getCookie(key)));
-//
-//    }
+    public void validateHeaders(Map<String, String> headers) {
+        for (String key : headers.keySet()) {
+            Assert.assertEquals(headers.get(key), response.getHeader(key));
+
+        }
+
+    }
+
+    /**
+     * This method is used to validate cookies of the response
+     *
+     * @param cookies - Expected Cookies
+     */
+    public void validateCookies(Map<String, String> cookies) {
+
+        for (String key : cookies.keySet()) {
+            Assert.assertEquals(cookies.get(key), response.getHeader(key));
+        }
+
+    }
 
     /**
      * This method is used to Deserialize the JSON Response into Java Object
@@ -57,7 +67,7 @@ public class ResponseValidation {
     @SneakyThrows
     public <T> T deserializeResponse(Class<T> Deserializer) {
         T deserializer = null;
-            deserializer = Deserializer.getDeclaredConstructor().newInstance();
+        deserializer = Deserializer.getDeclaredConstructor().newInstance();
 
         return response.as((Type) deserializer.getClass());
     }

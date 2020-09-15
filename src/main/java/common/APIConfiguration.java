@@ -15,5 +15,5 @@ public class APIConfiguration {
     private String resource;
 
     @JsonProperty(value="key")
-    private String key;
+    private String key =System.getProperty("APIKey");
 }

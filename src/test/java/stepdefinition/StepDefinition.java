@@ -1,6 +1,7 @@
 package stepdefinition;
 
 import api.utilities.RequestCreation;
+import common.Comparator;
 import common.Initialize;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -11,7 +12,6 @@ import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import org.junit.Assert;
 import ui.utilities.SeleniumUtils;
-import ui.utilities.TemperatureConversionUtils;
 
 import java.util.HashMap;
 
@@ -61,12 +61,11 @@ public class StepDefinition extends Initialize {
 
     @Then("compare the weather information retrieved from both sources")
     public void compare_the_weather_information_retrieved_from_both_sources() {
-        Assert.assertEquals(Float.parseFloat(weatherParametersUI.get("Temp in Degrees")),
-                TemperatureConversionUtils.convertTempToCelsius(kelvinTemperatureFromAPI),
-                testConfiguration.getVariance());
-        Assert.assertEquals(Float.parseFloat(weatherParametersUI.get("Temp in Fahrenheit")),
-                TemperatureConversionUtils.convertTempToFahrenheit(kelvinTemperatureFromAPI),
-                testConfiguration.getVariance());
+
+        Assert.assertTrue("Temperature in Celsius are not within the variance provided",Comparator.compareTempCelsius(Float.parseFloat(weatherParametersUI.get("Temp in Degrees")),
+                kelvinTemperatureFromAPI, testConfiguration.getVariance()));
+        Assert.assertTrue("Temperature in Fahrenheit are not within the variance provided",Comparator.compareTempFahrenheit(Float.parseFloat(weatherParametersUI.get("Temp in Fahrenheit")),
+                kelvinTemperatureFromAPI, testConfiguration.getVariance()));
     }
 
     @After

@@ -19,4 +19,10 @@ public class UIConfiguration {
 
     @JsonProperty(value="pollingTimeout")
     private long pollingTimeout;
+
+    @JsonProperty(value="driverPath")
+    private String driverPath;
+
+    @JsonProperty(value="headless")
+    private boolean headless;
 }

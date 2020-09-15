@@ -6,7 +6,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
@@ -27,7 +26,7 @@ public class SeleniumUtils {
     }
     /**
      * Method is used to click on Element
-     * @param element
+     * @param element - WebElement
      */
 
 
@@ -39,8 +38,8 @@ public class SeleniumUtils {
     }
     /**
      * Method is used to send text in the field
-     * @param element
-     * @param text
+     * @param element - WebElement
+     * @param text - Text to be updated in UI
      */
     public static void sendText(WebElement element, String text) {
         fluentWait.until(ExpectedConditions.visibilityOf(element));
@@ -50,8 +49,8 @@ public class SeleniumUtils {
     }
     /**
      * Method is used to send keys to the field
-     * @param element
-     * @param key
+     * @param element - WebElement
+     * @param key- Keyboard key
      */
     public static void sendText(WebElement element, Keys key) {
         fluentWait.until(ExpectedConditions.visibilityOf(element));
@@ -60,7 +59,7 @@ public class SeleniumUtils {
 
     /**
      * Method is used to scroll to the view
-     * @param element
+     * @param element - WebElement
      */
     public static void scrollIntoView(WebElement element, WebDriver driver) {
         fluentWait.until(ExpectedConditions.visibilityOf(element));
@@ -70,21 +69,17 @@ public class SeleniumUtils {
     }
     /**
      * Method is used to check for the presence of Elements
-     * @param element
-     * @return
+     * @param element - WebElement
+     * @return - status
      */
     public static boolean isPresent(WebElement element) {
-        if (element.isDisplayed()) {
-            return true;
-        } else {
-            return false;
-        }
+        return element.isDisplayed();
 
     }
     /**
      * Method is used to check if the Element is enabled.
-     * @param element
-     * @return
+     * @param element - WebElement
+     * @return - status of the element
      */
     public static boolean isEnabled(WebElement element) {
 
@@ -92,8 +87,8 @@ public class SeleniumUtils {
     }
     /**
      * Method is used to fetch the label text
-     * @param element
-     * @return
+     * @param element - WebElement
+     * @return - Label Text is returned
      */
     public static String getLabelText(WebElement element) {
         fluentWait.until(ExpectedConditions.visibilityOf(element));
@@ -101,9 +96,9 @@ public class SeleniumUtils {
     }
     /**
      * Method is used to validate the text ignoring the case of the characters.
-     * @param element
-     * @param expectedText
-     * @return
+     * @param element - WebElement
+     * @param expectedText - expected text for comparison
+     * @return - comparison result
      */
     public static Boolean validateTextIgnoreCase(WebElement element, String expectedText) {
         fluentWait.until(ExpectedConditions.visibilityOf(element));
@@ -112,7 +107,7 @@ public class SeleniumUtils {
 
     /**
      * This method is used to get specific attribute value
-     * @param element - WebElement
+     * @param element - WebElement - WebElement
      * @param attributeName - Specific attribute name
      * @return - Return attribute value
      */
@@ -122,9 +117,9 @@ public class SeleniumUtils {
     }
     /**
      * Method is used to validate the text along with case
-     * @param element
-     * @param expectedText
-     * @return
+     * @param element - WebElement
+     * @param expectedText - text for comparison
+     * @return - result of comparison
      */
 
     public static Boolean validateText(WebElement element, String expectedText) {
@@ -133,7 +128,7 @@ public class SeleniumUtils {
     }
     /**
      * Method is used to provide wait.
-     * @param millis
+     * @param millis - milliseconds for wait
      */
     public static void waitformilli(long millis) {
         try {
@@ -165,7 +160,7 @@ public class SeleniumUtils {
 
     /**
      * Method captures screenshot and returns in byte format.
-     * @return
+     * @return - return byte for the screenshot
      */
     public static byte[] captureScreenshot(WebDriver driver) {
         return ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
