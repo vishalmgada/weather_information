@@ -4,8 +4,9 @@
 name: Java CI with Maven
 
 on:
+  workflow_dispatch:
   push:
-    branches: [ feature/weather_information ] 
+    branches: [ feature/* ]
   pull_request:
     branches: [ main ]
 
