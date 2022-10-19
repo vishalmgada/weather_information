@@ -93,7 +93,7 @@
         <selenium.version>3.141.59</selenium.version>
         <lombok.version>1.18.12</lombok.version>
         <cucumber.version>6.6.1</cucumber.version>
-        <jackson.version>2.11.2</jackson.version>
+        <jackson.version>2.13.4.1</jackson.version>
         <junit.version>4.13.1</junit.version>
         <compiler.version>3.8.0</compiler.version>
     </properties>
